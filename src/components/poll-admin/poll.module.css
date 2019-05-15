@@ -1,0 +1,25 @@
+.poll {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  grid-gap: var(--distance-gap);
+}
+
+.title {
+  grid-column-start: 1;
+  align-self: flex-start;
+}
+
+.iconsContainer {
+  grid-column-start: 3;
+  grid-row-start: 1;
+}
+
+.choices {
+  font-size: var(--text-fontsize-sm);
+}
+
+.text {
+  font-weight: 400;
+  font-size: var(--text-fontsize-sm);
+}

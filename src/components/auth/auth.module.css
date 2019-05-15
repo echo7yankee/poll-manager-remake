@@ -1,0 +1,109 @@
+.authContainer {
+  background: var(--white-color);
+  width: 114rem;
+  padding: 2.5rem;
+  margin: 10rem auto;
+  border-radius: 5px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.authContainer h4 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.inputGroup {
+  margin-top: 1.5rem;
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 1.2rem 0rem;
+  border-radius: 3px;
+  border: none;
+  border-bottom: 1px solid var(--md-grey-color);
+  background: transparent;
+  margin-top: 0.5rem;
+}
+
+.input:valid {
+  border-bottom: 1px solid green;
+}
+
+.input:invalid {
+  border-bottom: 1px solid var(--red-color);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  opacity: 0.6;
+}
+
+.authBtn {
+  margin-top: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+  border: 1px solid var(--blue-color);
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+.authBtn:focus {
+  outline: none;
+}
+
+.authBtn::after {
+  content: "";
+  background: var(--blue-color);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: visibility 0.3s, transform 0.3s;
+  border: 1px solid var(--blue-color);
+}
+
+.authBtn:hover::after {
+  transform: translateX(0);
+  outline: none;
+  visibility: visible;
+  z-index: -1;
+}
+
+.authBtn:hover {
+  color: var(--white-color);
+  transition: color 0.3s;
+}
+
+.centerContainer {
+  text-align: center;
+}
+
+.error {
+  color: var(--white-color);
+  background-color: rgba(231, 58, 35, 0.8);
+  padding: 1rem 1.2rem;
+  font-size: 1.4rem;
+  border-radius: 5px;
+  display: block;
+  margin: 1rem 0;
+}

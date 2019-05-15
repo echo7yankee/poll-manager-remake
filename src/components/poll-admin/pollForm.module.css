@@ -1,0 +1,28 @@
+.form {
+  grid-column-start: 2;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  grid-gap: var(--distance-gap);
+}
+
+.title {
+  font-size: var(--text-fontsize-md);
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.inputGroup {
+  display: grid;
+  grid-gap: 0.5rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  font-size: var(--text-fontsize-sm);
+}
+
+.formBtns {
+  grid-column-start: 2;
+}

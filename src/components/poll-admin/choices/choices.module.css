@@ -1,0 +1,16 @@
+.choices {
+  grid-column-start: 2;
+}
+
+.inputGroup {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: max-content 1fr 2.5rem;
+  align-items: center;
+  grid-gap: var(--distance-gap);
+}
+
+.inputGroup label {
+  font-size: var(--text-fontsize-md);
+  font-weight: 500;
+}

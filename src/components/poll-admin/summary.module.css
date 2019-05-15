@@ -1,0 +1,30 @@
+.title {
+  font-size: var(--text-fontsize-md);
+  font-weight: 500;
+  align-self: center;
+}
+
+.item {
+  list-style: none;
+  font-size: var(--text-fontsize-sm);
+}
+
+.pollContainerSummary {
+  border: none !important;
+  border-bottom: 1px solid var(--md-grey-color) !important;
+}
+
+.hide {
+  max-height: 0;
+  padding: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out,
+    opacity 0.3s ease;
+}
+
+.show {
+  max-height: initial;
+  opacity: 1;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out,
+    opacity 0.8s ease;
+}

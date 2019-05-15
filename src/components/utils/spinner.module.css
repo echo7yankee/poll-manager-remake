@@ -1,0 +1,11 @@
+.spinner {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner img {
+  width: 10rem;
+  height: 10rem;
+}

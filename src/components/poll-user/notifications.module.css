@@ -1,0 +1,19 @@
+.notifications {
+  background: var(--blue-color);
+  padding: var(--distance-gap);
+}
+
+.notifications p {
+  font-size: var(--text-fontsize-md);
+  color: var(--white-color);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.highlight {
+  font-weight: 700;
+  color: var(--red-color);
+  border-radius: 3px;
+  margin: 0 8px;
+}

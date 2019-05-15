@@ -1,0 +1,39 @@
+.modalOverlay {
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: 50rem;
+  margin-bottom: 20rem;
+  border-radius: 3px;
+  padding: var(--distance-gap);
+  background: var(--white-color);
+  position: relative;
+  z-index: 100;
+}
+
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.text {
+  font-size: var(--text-fontsize-md);
+  text-align: center;
+}
+
+.modal div {
+  text-align: center;
+  margin-top: var(--distance-gap);
+}
