@@ -3,7 +3,7 @@ import style from "./auth.module.css";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../store/actions/authActions";
-import Spinner from "../utils/Spinner";
+import spinnerGif from "../imgAndSvg/GIF/spinner.gif";
 
 const initialState = {
   firstName: "",
@@ -56,7 +56,6 @@ const SignUp = ({ signUp, authReducer, auth }) => {
   };
 
   if (auth.uid) return <Redirect to="/create" />;
-  if (spinner) return <Spinner />;
 
   return (
     <>
@@ -128,6 +127,13 @@ const SignUp = ({ signUp, authReducer, auth }) => {
             {authReducer.authError && (
               <span className={style.error}>{authReducer.authError}</span>
             )}
+          </div>
+          <div className={style.centerContainer}>
+            <span>
+              {spinner && (
+                <img className={style.spinner} src={spinnerGif} alt="" />
+              )}
+            </span>
           </div>
         </form>
       </div>

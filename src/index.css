@@ -12,7 +12,7 @@
   --text-color: #666;
   --white-color: #f7f7f7;
   --red-color: #d34836;
-  --red-color-error: rgba(211, 72, 54, 0.8);
+  --red-color-error: rgb(233, 40, 15);
   --green-color: #388828;
   --message-color: rgba(56, 136, 40, 0.8);
   --blue-color: #1072db;
@@ -68,6 +68,12 @@ body {
 
 .input::placeholder {
   opacity: 0.6;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .alignself-start {
@@ -285,11 +291,11 @@ body {
   border-radius: 3px;
   padding: 0.6rem 1rem;
   animation: animateMessage 0.5s;
+  font-weight: 600;
 }
 
 .error-red {
-  background: var(--red-color-error);
-  color: var(--white-color);
+  color: var(--red-color-error);
 }
 
 @keyframes animateMessage {

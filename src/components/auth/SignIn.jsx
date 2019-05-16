@@ -3,7 +3,7 @@ import style from "./auth.module.css";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signIn } from "../../store/actions/authActions";
-import Spinner from "../utils/Spinner";
+import spinnerGif from "../imgAndSvg/GIF/spinner.gif";
 
 const initialState = {
   email: "",
@@ -16,6 +16,8 @@ const SignIn = ({ signIn, auth, authReducer }) => {
 
   //Destructuring off of credentials
   const { email, password } = credentials;
+
+  console.log(authReducer.isLoading);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -41,7 +43,6 @@ const SignIn = ({ signIn, auth, authReducer }) => {
   };
 
   if (auth.uid) return <Redirect to="/create" />;
-  if (spinner) return <Spinner />;
 
   return (
     <>
@@ -80,6 +81,13 @@ const SignIn = ({ signIn, auth, authReducer }) => {
           {authReducer.authError && (
             <span className={style.error}>{authReducer.authError}</span>
           )}
+        </div>
+        <div className={style.centerContainer}>
+          <span>
+            {spinner && (
+              <img className={style.spinner} src={spinnerGif} alt="" />
+            )}
+          </span>
         </div>
       </div>
     </>

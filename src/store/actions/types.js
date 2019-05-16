@@ -3,6 +3,7 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 export const LOGOUT = "LOGOUT";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAILED = "SIGNUP_FAILED";
+export const GET_PROFILE_PICTURE = "GET_PROFILE_PICTURE";
 
 export const ADD_POLL = "ADD_POLL";
 export const DELETE_POLL = "DELETE_POLL";

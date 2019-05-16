@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import style from "./navbar.module.css";
 import Dropdown from "./Dropdown";
+import defaultProfilePic from "../imgAndSvg/SVG/profile.svg";
 
-const SignedInLinks = ({ logout, profile }) => {
+const SignedInLinks = ({ logout, profile, profilePic }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleDropdown = () => {
@@ -55,7 +56,14 @@ const SignedInLinks = ({ logout, profile }) => {
         <span className={`${style.navLink} ${style.blueText}`}>
           Signed in as
         </span>{" "}
-        <span className={style.initials}>{profile.initials}</span>
+        <span className={`${style.initials} ml-2 `}>{profile.initials}</span>
+        <div className={style.profilePicContainer}>
+          <img
+            className={style.profilePic}
+            src={profilePic || defaultProfilePic}
+            alt=""
+          />
+        </div>
         <i
           className={`arrow ${
             toggle === true ? "arrow-down" : "arrow-right"

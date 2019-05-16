@@ -55,3 +55,20 @@
 .input {
   display: none;
 }
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.5rem;
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.uploadedImage {
+  width: 100%;
+  height: auto;
+  border: 0px solid rgba(255, 255, 255, 0);
+}

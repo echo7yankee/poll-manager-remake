@@ -51,17 +51,23 @@
 }
 
 .initials {
-  width: 3.5rem;
-  height: 3.5rem;
-  margin-left: 1rem;
   border-radius: 50%;
-  color: white;
-  background: #ff6f61;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: #ff6f61;
+  text-decoration: underline;
   font-size: var(--text-fontsize-md);
+}
+
+.profilePicContainer {
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: 1rem;
+}
+
+.profilePic {
+  width: 100%;
+  height: auto;
 }
 
 .navItemPosRelative {

@@ -3,11 +3,13 @@ import {
   SIGNUP_FAILED,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  LOGOUT
+  LOGOUT,
+  GET_PROFILE_PICTURE
 } from "../actions/types";
 
 const initialState = {
   authError: null,
+  profilePic: null,
   isLoading: true
 };
 
@@ -46,6 +48,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         authError: action.err.message
+      };
+    case GET_PROFILE_PICTURE:
+      return {
+        ...state,
+        profilePic: action.payload
       };
 
     default:
