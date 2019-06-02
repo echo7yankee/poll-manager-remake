@@ -26,60 +26,66 @@ const Answers = props => {
 
   return (
     <div className={styleCreate.container}>
-      {answers.map((answer, indexAnswer) => {
-        return (
-          <div key={answer.id}>
-            <div
-              className={`${
-                styleCreate.pollContainer
-              }   no-row-gap cursor-pointer hover-darker border-none`}
-              onClick={() => toggleAccordion(answer.id)}
-            >
-              <span
-                className={`${styleCreate.counter} ${
-                  answer.toggle === true
-                    ? styleCreate.counterRed
-                    : styleCreate.counterGrey
-                }`}
+      {answers.length === 0 ? (
+        <div className="text-center">
+          <p className="error error-red">There are no answers at the moment.</p>
+        </div>
+      ) : (
+        answers.map((answer, indexAnswer) => {
+          return (
+            <div key={answer.id}>
+              <div
+                className={`${
+                  styleCreate.pollContainer
+                }   no-row-gap cursor-pointer hover-darker border-none`}
+                onClick={() => toggleAccordion(answer.id)}
               >
-                {indexAnswer + 1}
-              </span>
-              <p className={style.title}>{answer.user.name}</p>
-              <span style={{ gridColumn: "2" }}>{answer.user.date}</span>
-              <i
-                className={`arrow ${
-                  answer.toggle === true ? "arrow-down" : "arrow-right"
-                }`}
-                style={{ gridRow: "1 / span 2 " }}
-              />
-            </div>
-            {props.polls.map((poll, index) => {
-              return (
-                <div
-                  key={poll.id}
-                  className={`${styleCreate.pollContainer} ${
-                    style.pollContainerSummary
-                  } ${
-                    answer.toggle === true ? style.show : style.hide
-                  } no-row-gap`}
+                <span
+                  className={`${styleCreate.counter} ${
+                    answer.toggle === true
+                      ? styleCreate.counterRed
+                      : styleCreate.counterGrey
+                  }`}
                 >
-                  <ul className={style.items}>
-                    <li className={style.item}>
-                      <p style={{ fontWeight: "500" }}>{poll.value}</p>
-                      <span>{answer.answer[index].radioValue}</span>
-                      <span>
-                        {answer.answer[index].checked.map(item => {
-                          return item.value + " ";
-                        })}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
+                  {indexAnswer + 1}
+                </span>
+                <p className={style.title}>{answer.user.name}</p>
+                <span style={{ gridColumn: "2" }}>{answer.user.date}</span>
+                <i
+                  className={`arrow ${
+                    answer.toggle === true ? "arrow-down" : "arrow-right"
+                  }`}
+                  style={{ gridRow: "1 / span 2 " }}
+                />
+              </div>
+              {props.polls.map((poll, index) => {
+                return (
+                  <div
+                    key={poll.id}
+                    className={`${styleCreate.pollContainer} ${
+                      style.pollContainerSummary
+                    } ${
+                      answer.toggle === true ? style.show : style.hide
+                    } no-row-gap`}
+                  >
+                    <ul className={style.items}>
+                      <li className={style.item}>
+                        <p style={{ fontWeight: "500" }}>{poll.value}</p>
+                        <span>{answer.answer[index].radioValue}</span>
+                        <span>
+                          {answer.answer[index].checked.map(item => {
+                            return item.value + " ";
+                          })}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };

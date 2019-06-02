@@ -3,8 +3,7 @@ import {
   SIGNUP_FAILED,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  LOGOUT,
-  GET_PROFILE_PICTURE
+  LOGOUT
 } from "./types";
 
 export const signIn = user => {
@@ -70,12 +69,5 @@ export const signUp = newUser => {
           err
         });
       });
-  };
-};
-
-export const getProfilePicture = picture => {
-  return {
-    type: GET_PROFILE_PICTURE,
-    payload: picture
   };
 };

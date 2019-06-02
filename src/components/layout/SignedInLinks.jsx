@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import style from "./navbar.module.css";
 import Dropdown from "./Dropdown";
-import defaultProfilePic from "../imgAndSvg/SVG/profile.svg";
+//import defaultProfilePic from "../imgAndSvg/SVG/profile.svg";
 
-const SignedInLinks = ({ logout, profile, profilePic }) => {
+const SignedInLinks = ({ logout, profile }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleDropdown = () => {
     setToggle(toggle => !toggle);
   };
+
+  const profilePic = localStorage.getItem("uploadedFile");
 
   return (
     <ul className={style.navItems}>
@@ -60,7 +62,8 @@ const SignedInLinks = ({ logout, profile, profilePic }) => {
         <div className={style.profilePicContainer}>
           <img
             className={style.profilePic}
-            src={profilePic || defaultProfilePic}
+            // src={`${defaultProfilePic}` || "/profile.jpg"}
+            src={process.env.PUBLIC_URL + profilePic}
             alt=""
           />
         </div>

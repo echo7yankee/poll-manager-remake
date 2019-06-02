@@ -7,7 +7,7 @@ import { logout } from "../../store/actions/authActions";
 
 import { Link } from "react-router-dom";
 
-const Navbar = ({ logout, auth, profile, authReducer }) => {
+const Navbar = ({ logout, auth, profile }) => {
   return (
     <nav className={style.nav}>
       <Link to={auth.uid ? "create" : "/"} className={style.logo}>
@@ -15,11 +15,7 @@ const Navbar = ({ logout, auth, profile, authReducer }) => {
       </Link>
 
       {auth.uid ? (
-        <SignedInLinks
-          logout={logout}
-          profile={profile}
-          profilePic={authReducer.profilePic}
-        />
+        <SignedInLinks logout={logout} profile={profile} />
       ) : (
         <SignedOutLinks />
       )}
@@ -29,7 +25,6 @@ const Navbar = ({ logout, auth, profile, authReducer }) => {
 
 const mapStateToProps = state => {
   return {
-    authReducer: state.authReducer,
     auth: state.firebase.auth,
     profile: state.firebase.profile
   };
