@@ -4,7 +4,7 @@ import {
   EDIT_POLL,
   TOGGLE_EDIT,
   CLEAR_POLLS
-} from "./types";
+} from "../types";
 
 export const addPoll = newPoll => {
   return {

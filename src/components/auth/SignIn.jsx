@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./auth.module.css";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { signIn } from "../../store/actions/authActions";
+import { loginUser } from "../../store/actions/authActions";
 import spinnerGif from "../imgAndSvg/GIF/spinner.gif";
 
 const initialState = {
@@ -10,30 +10,12 @@ const initialState = {
   password: ""
 };
 
-const SignIn = ({ signIn, auth, authReducer }) => {
+const SignIn = ({ loginUser, history, auth }) => {
   const [credentials, setCredentials] = useState(initialState);
-  const [spinner, setSpinner] = useState(false);
-
-  //Destructuring off of credentials
+  //destructuring off of credentials
   const { email, password } = credentials;
-
-  console.log(authReducer.isLoading);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (email === "" || password === "") {
-      return;
-    }
-
-    if (authReducer.isLoading === true) {
-      setSpinner(true);
-    } else {
-      setSpinner(false);
-    }
-
-    signIn(credentials);
-    setCredentials(initialState);
-  };
+  //destructuring off of auth
+  const { isLoading, errors } = auth;
 
   const handleChange = e => {
     setCredentials({
@@ -42,7 +24,10 @@ const SignIn = ({ signIn, auth, authReducer }) => {
     });
   };
 
-  if (auth.uid) return <Redirect to="/create" />;
+  const handleSubmit = e => {
+    e.preventDefault();
+    loginUser(credentials, history);
+  };
 
   return (
     <>
@@ -55,40 +40,46 @@ const SignIn = ({ signIn, auth, authReducer }) => {
               type="email"
               id="email"
               placeholder="Email"
-              className={style.input}
+              className={errors.email ? style.inputInvalid : style.input}
               value={email}
               onChange={handleChange}
-              required
             />
+            {errors.email && (
+              <div className={style.errorContainer}>
+                <span className={style.error}>{errors.email}</span>
+              </div>
+            )}
           </div>
           <div className={style.inputGroup}>
             <input
               type="password"
               id="password"
               placeholder="Password"
-              className={style.input}
+              className={errors.password ? style.inputInvalid : style.input}
               value={password}
               onChange={handleChange}
-              required
-              minLength="6"
             />
-          </div>
-          <button type="submit" className={style.authBtn}>
-            Log in
-          </button>
-        </form>
-        <div className={style.centerContainer}>
-          {authReducer.authError && (
-            <span className={style.error}>{authReducer.authError}</span>
-          )}
-        </div>
-        <div className={style.centerContainer}>
-          <span>
-            {spinner && (
-              <img className={style.spinner} src={spinnerGif} alt="" />
+            {errors.password && (
+              <div className={style.errorContainer}>
+                <span className={style.error}>{errors.password}</span>
+              </div>
             )}
-          </span>
-        </div>
+          </div>
+          <button
+            type="submit"
+            className={isLoading ? style.disabledBtn : style.authBtn}
+          >
+            Log in
+            {isLoading && (
+              <img className={style.spinner} src={spinnerGif} alt="spinner" />
+            )}
+          </button>
+          {errors.general && (
+            <div className={style.centerContainer}>
+              <span className={style.error}>{errors.general}</span>
+            </div>
+          )}
+        </form>
       </div>
     </>
   );
@@ -96,14 +87,13 @@ const SignIn = ({ signIn, auth, authReducer }) => {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
-    authReducer: state.authReducer
+    auth: state.authReducer
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    signIn: user => dispatch(signIn(user))
+    loginUser: (user, history) => dispatch(loginUser(user, history))
   };
 };
 

@@ -4,7 +4,7 @@ import {
   TOGGLE_EDIT,
   EDIT_POLL,
   CLEAR_POLLS
-} from "../actions/types";
+} from "../types";
 import uuidv4 from "uuid/v4";
 
 const initialState = {

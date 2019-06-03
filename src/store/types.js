@@ -1,9 +1,8 @@
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILED = "LOGIN_FAILED";
-export const LOGOUT = "LOGOUT";
-export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
-export const SIGNUP_FAILED = "SIGNUP_FAILED";
-
+//auth types
+export const LOADING_USER = "LOADING_USER";
+export const SET_ERRORS = "SET_ERRORS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+//Poll types
 export const ADD_POLL = "ADD_POLL";
 export const DELETE_POLL = "DELETE_POLL";
 export const CLEAR_POLLS = "CLEAR_POLLS";

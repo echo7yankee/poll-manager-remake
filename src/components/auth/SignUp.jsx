@@ -2,51 +2,23 @@ import React, { useState } from "react";
 import style from "./auth.module.css";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { signUp } from "../../store/actions/authActions";
+import { signupUser } from "../../store/actions/authActions";
 import spinnerGif from "../imgAndSvg/GIF/spinner.gif";
 
 const initialState = {
-  firstName: "",
-  lastName: "",
+  handle: "",
   email: "",
   password: "",
   confirmPassword: ""
 };
 
-const SignUp = ({ signUp, authReducer, auth }) => {
+const SignUp = ({ signupUser, auth, history }) => {
   const [credentials, setCredentials] = useState(initialState);
-  const [error, setError] = useState("");
-  const [spinner, setSpinner] = useState(false);
 
-  //Destructuring off of credentials
-  const { firstName, lastName, email, password, confirmPassword } = credentials;
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
-      password === "" ||
-      confirmPassword === ""
-    ) {
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Confirm password must be the same as Password");
-      return;
-    }
-
-    if (authReducer.isLoading === true) {
-      setSpinner(true);
-    } else {
-      setSpinner(false);
-    }
-
-    signUp(credentials);
-    setCredentials(initialState);
-  };
+  //destructuring off of credentials
+  const { handle, email, password, confirmPassword } = credentials;
+  //destructuring off of auth
+  const { errors, isLoading } = auth;
 
   const handleChange = e => {
     setCredentials({
@@ -55,7 +27,10 @@ const SignUp = ({ signUp, authReducer, auth }) => {
     });
   };
 
-  if (auth.uid) return <Redirect to="/create" />;
+  const handleSubmit = e => {
+    e.preventDefault();
+    signupUser(credentials, history);
+  };
 
   return (
     <>
@@ -66,75 +41,80 @@ const SignUp = ({ signUp, authReducer, auth }) => {
           <div className={style.inputGroup}>
             <input
               type="text"
-              id="firstName"
-              placeholder="First Name"
-              className={style.input}
-              value={firstName}
+              id="handle"
+              placeholder="Name"
+              className={errors.handle ? style.inputInvalid : style.input}
+              value={handle}
               onChange={handleChange}
-              required
             />
-          </div>
-          <div className={style.inputGroup}>
-            <input
-              type="text"
-              id="lastName"
-              placeholder="Last Name"
-              className={style.input}
-              value={lastName}
-              onChange={handleChange}
-              required
-            />
+            {errors.handle && (
+              <div className={style.errorContainer}>
+                <span className={style.error}>{errors.handle}</span>
+              </div>
+            )}
           </div>
           <div className={style.inputGroup}>
             <input
               type="email"
               id="email"
               placeholder="Email"
-              className={style.input}
+              className={errors.email ? style.inputInvalid : style.input}
               value={email}
               onChange={handleChange}
-              required
             />
+            {errors.email && (
+              <div className={style.errorContainer}>
+                <span className={style.error}>{errors.email}</span>
+              </div>
+            )}
           </div>
           <div className={style.inputGroup}>
             <input
               type="password"
               id="password"
               placeholder="Password"
-              className={style.input}
+              className={errors.password ? style.inputInvalid : style.input}
               value={password}
               onChange={handleChange}
-              required
             />
+            {errors.password && (
+              <div className={style.errorContainer}>
+                <span className={style.error}>{errors.password}</span>
+              </div>
+            )}
           </div>
           <div className={style.inputGroup}>
             <input
               type="password"
               id="confirmPassword"
               placeholder="Confirm Password"
-              className={style.input}
+              className={
+                errors.confirmPassword ? style.inputInvalid : style.input
+              }
               value={confirmPassword}
               onChange={handleChange}
-              required
             />
-          </div>
-
-          <button type="submit" className={style.authBtn}>
-            Sign Up
-          </button>
-          <div className={style.centerContainer}>
-            {error && <span className={style.error}>{error}</span>}
-            {authReducer.authError && (
-              <span className={style.error}>{authReducer.authError}</span>
+            {errors.confirmPassword && (
+              <div className={style.errorContainer}>
+                <span className={style.error}>{errors.confirmPassword}</span>
+              </div>
             )}
           </div>
-          <div className={style.centerContainer}>
-            <span>
-              {spinner && (
-                <img className={style.spinner} src={spinnerGif} alt="" />
-              )}
-            </span>
-          </div>
+
+          <button
+            type="submit"
+            className={isLoading ? style.disabledBtn : style.authBtn}
+          >
+            Sign Up
+            {isLoading && (
+              <img className={style.spinner} src={spinnerGif} alt="spinner" />
+            )}
+          </button>
+          {errors.general && (
+            <div className={style.centerContainer}>
+              <span className={style.error}>{errors.general}</span>
+            </div>
+          )}
         </form>
       </div>
     </>
@@ -143,14 +123,13 @@ const SignUp = ({ signUp, authReducer, auth }) => {
 
 const mapStateToProps = state => {
   return {
-    authReducer: state.authReducer,
-    auth: state.firebase.auth
+    auth: state.authReducer
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUp: newUser => dispatch(signUp(newUser))
+    signupUser: (newUser, history) => dispatch(signupUser(newUser, history))
   };
 };
 

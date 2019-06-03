@@ -3,37 +3,29 @@ import style from "./navbar.module.css";
 import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
-import { logout } from "../../store/actions/authActions";
 
 import { Link } from "react-router-dom";
 
-const Navbar = ({ logout, auth, profile }) => {
+const Navbar = () => {
   return (
     <nav className={style.nav}>
-      <Link to={auth.uid ? "create" : "/"} className={style.logo}>
+      <Link to={"/"} className={style.logo}>
         M-POLLS
       </Link>
 
-      {auth.uid ? (
-        <SignedInLinks logout={logout} profile={profile} />
-      ) : (
-        <SignedOutLinks />
-      )}
+      <SignedInLinks />
+
+      <SignedOutLinks />
     </nav>
   );
 };
 
 const mapStateToProps = state => {
-  return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    logout: () => dispatch(logout())
-  };
+  return {};
 };
 
 export default connect(

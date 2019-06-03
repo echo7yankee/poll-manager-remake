@@ -1,4 +1,4 @@
-import { GET_ANSWERS } from "../actions/types";
+import { GET_ANSWERS } from "../types";
 
 const initialState = {
   answers: []

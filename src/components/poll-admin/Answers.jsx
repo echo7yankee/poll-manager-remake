@@ -22,8 +22,6 @@ const Answers = props => {
     );
   };
 
-  if (!props.auth.uid) return <Redirect to="/signin" />;
-
   return (
     <div className={styleCreate.container}>
       {answers.length === 0 ? (
@@ -92,8 +90,6 @@ const Answers = props => {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
     answers: state.answers.answers,
     polls: state.polls.polls
   };

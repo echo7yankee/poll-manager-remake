@@ -3,9 +3,7 @@ import Questions from "./Questions";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const Dashboard = ({ auth }) => {
-  if (auth.uid) return <Redirect to="/create" />;
-
+const Dashboard = () => {
   return (
     <div>
       <Questions />
@@ -14,9 +12,7 @@ const Dashboard = ({ auth }) => {
 };
 
 const mapStateToProps = state => {
-  return {
-    auth: state.firebase.auth
-  };
+  return {};
 };
 
 export default connect(

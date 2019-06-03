@@ -22,8 +22,6 @@ const CreatePoll = ({
   toggleEdit,
   editPoll
 }) => {
-  if (!auth.uid) return <Redirect to="/signin" />;
-
   return (
     <>
       <div className={style.container}>
@@ -81,7 +79,6 @@ const CreatePoll = ({
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
     polls: state.polls.polls
   };
 };

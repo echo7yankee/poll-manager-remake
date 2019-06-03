@@ -1,4 +1,4 @@
-import { GET_ANSWERS } from "./types";
+import { GET_ANSWERS } from "../types";
 
 export const getAnswers = answer => {
   return {

@@ -1,52 +1,34 @@
-import {
-  SIGNUP_SUCCESS,
-  SIGNUP_FAILED,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  LOGOUT
-} from "../actions/types";
+import { LOADING_USER, SET_ERRORS, CLEAR_ERRORS } from "../types";
 
 const initialState = {
-  authError: null,
-  isLoading: true
+  isLoading: false,
+  errors: {}
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_SUCCESS:
-      console.log("LOGIN success");
-      return {
-        ...state,
-        authError: null,
-        isLoading: false
-      };
-
-    case LOGIN_FAILED:
-      console.log("LOGIN failed");
-      return {
-        ...state,
-        authError: action.err.message
-      };
-
-    case LOGOUT:
-      console.log("Logged out");
+    case LOADING_USER: {
       return {
         ...state,
         isLoading: true
       };
+    }
 
-    case SIGNUP_SUCCESS:
-      console.log("Signup success");
+    case CLEAR_ERRORS: {
       return {
         ...state,
-        authError: null
+        isLoading: false,
+        errors: {}
       };
-    case SIGNUP_FAILED:
-      console.log("Signup failed");
+    }
+
+    case SET_ERRORS: {
       return {
         ...state,
-        authError: action.err.message
+        isLoading: false,
+        errors: action.payload
       };
+    }
 
     default:
       return state;
