@@ -29,6 +29,8 @@ const SignIn = ({ loginUser, history, auth }) => {
     loginUser(credentials, history);
   };
 
+  if (auth.authenticated) return <Redirect to="/create" />;
+
   return (
     <>
       <div className={style.authContainer}>

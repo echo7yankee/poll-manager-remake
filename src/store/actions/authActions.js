@@ -1,4 +1,10 @@
-import { LOADING_USER, SET_ERRORS, CLEAR_ERRORS } from "../types";
+import {
+  LOADING_USER,
+  SET_ERRORS,
+  CLEAR_ERRORS,
+  SET_UNAUTHENTICATED,
+  SET_AUTHENTICATED
+} from "../types";
 import axios from "axios";
 
 export const signupUser = (newUser, history) => dispatch => {
@@ -8,6 +14,7 @@ export const signupUser = (newUser, history) => dispatch => {
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch({ type: CLEAR_ERRORS });
+      dispatch({ type: SET_AUTHENTICATED });
       history.push("/create");
     })
     .catch(err => {
@@ -25,11 +32,20 @@ export const loginUser = (user, history) => dispatch => {
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch({ type: CLEAR_ERRORS });
+      dispatch({ type: SET_AUTHENTICATED });
       history.push("/create");
     })
     .catch(err => {
       dispatch({ type: SET_ERRORS, payload: err.response.data });
     });
+};
+
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem("FBIdToken");
+  delete axios.defaults.headers.common["Authorization"];
+  dispatch({
+    type: SET_UNAUTHENTICATED
+  });
 };
 
 const setAuthorizationHeader = token => {

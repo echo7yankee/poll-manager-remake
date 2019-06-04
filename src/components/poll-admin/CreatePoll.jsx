@@ -15,13 +15,15 @@ import Poll from "./Poll";
 
 const CreatePoll = ({
   polls,
-  auth,
   addPoll,
   deletePoll,
   clearPolls,
   toggleEdit,
-  editPoll
+  editPoll,
+  auth: { authenticated }
 }) => {
+  if (!authenticated) return <Redirect to="/signin" />;
+
   return (
     <>
       <div className={style.container}>
@@ -79,7 +81,8 @@ const CreatePoll = ({
 
 const mapStateToProps = state => {
   return {
-    polls: state.polls.polls
+    polls: state.polls.polls,
+    auth: state.authReducer
   };
 };
 

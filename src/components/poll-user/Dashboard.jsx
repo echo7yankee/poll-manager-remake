@@ -3,7 +3,9 @@ import Questions from "./Questions";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const Dashboard = () => {
+const Dashboard = ({ auth: { authenticated } }) => {
+  if (authenticated) return <Redirect to="/create" />;
+
   return (
     <div>
       <Questions />
@@ -12,7 +14,9 @@ const Dashboard = () => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    auth: state.authReducer
+  };
 };
 
 export default connect(

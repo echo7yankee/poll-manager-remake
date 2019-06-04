@@ -1,13 +1,23 @@
 import React from "react";
 
-const RadioInput = ({ name, id, value, onChange, type, disabled }) => {
+const RadioInput = ({
+  name,
+  id,
+  value,
+  onChange,
+  type,
+  inputType,
+  placeHolder,
+  className,
+  disabled
+}) => {
   return (
     <input
       name={name}
       id={id}
-      type="radio"
-      placeholder="Enter question..."
-      className="mr-1"
+      type={inputType}
+      placeholder={placeHolder}
+      className={className}
       value={value}
       checked={type}
       onChange={onChange}

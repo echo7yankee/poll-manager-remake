@@ -22,6 +22,8 @@ const Summary = props => {
     );
   };
 
+  if (!props.auth.authenticated) return <Redirect to="/signin" />;
+
   return (
     <div className={styleCreate.container}>
       {polls.length === 0 ? (
@@ -70,6 +72,7 @@ const Summary = props => {
                       <li className={style.item}>
                         <span className="mr-1">{answer.user.name}:</span>
                         {answer.answer[index].radioValue}
+                        {answer.answer[index].other}
                         {answer.answer[index].checked.map(item => {
                           return item.value + " ";
                         })}{" "}
@@ -90,7 +93,8 @@ const Summary = props => {
 const mapStateToProps = state => {
   return {
     polls: state.polls.polls,
-    answers: state.answers.answers
+    answers: state.answers.answers,
+    auth: state.authReducer
   };
 };
 

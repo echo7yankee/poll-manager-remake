@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import style from "./navbar.module.css";
 
-const Dropdown = ({ toggle, logout }) => {
+const Dropdown = ({ toggle, logoutUser }) => {
   return (
     <div
       className={`${style.dropdownContainer} ${
@@ -16,7 +16,10 @@ const Dropdown = ({ toggle, logout }) => {
             Profile
           </Link>
         </li>
-        <li className={`${style.dropdownItem} hover-darker`} onClick={logout}>
+        <li
+          className={`${style.dropdownItem} hover-darker`}
+          onClick={logoutUser}
+        >
           <Link to="/" className={`${style.dropdownItemLink} `}>
             Logout
           </Link>

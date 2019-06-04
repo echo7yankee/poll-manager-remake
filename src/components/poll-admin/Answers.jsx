@@ -22,6 +22,8 @@ const Answers = props => {
     );
   };
 
+  if (!props.auth.authenticated) return <Redirect to="/signin" />;
+
   return (
     <div className={styleCreate.container}>
       {answers.length === 0 ? (
@@ -57,6 +59,8 @@ const Answers = props => {
                 />
               </div>
               {props.polls.map((poll, index) => {
+                console.log(answer.answer[index].radioValue);
+
                 return (
                   <div
                     key={poll.id}
@@ -70,6 +74,7 @@ const Answers = props => {
                       <li className={style.item}>
                         <p style={{ fontWeight: "500" }}>{poll.value}</p>
                         <span>{answer.answer[index].radioValue}</span>
+                        <span>{answer.answer[index].other}</span>
                         <span>
                           {answer.answer[index].checked.map(item => {
                             return item.value + " ";
@@ -91,7 +96,8 @@ const Answers = props => {
 const mapStateToProps = state => {
   return {
     answers: state.answers.answers,
-    polls: state.polls.polls
+    polls: state.polls.polls,
+    auth: state.authReducer
   };
 };
 

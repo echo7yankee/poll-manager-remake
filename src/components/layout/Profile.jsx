@@ -6,7 +6,7 @@ import style from "./profile.module.css";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-const Profile = ({ history }) => {
+const Profile = ({ history, auth: { authenticated } }) => {
   const [message, setMessage] = useState("");
 
   const onChange = e => {};
@@ -22,6 +22,9 @@ const Profile = ({ history }) => {
 
   // console.log("File: ", file);
   // console.log("Uploaded File:", uploadedFile.filePath);
+
+  if (!authenticated) return <Redirect to="/signin" />;
+
   return (
     <div className={styleCreate.container} style={{ overflow: "visible" }}>
       <div className={style.profileContainer}>
@@ -71,7 +74,9 @@ const Profile = ({ history }) => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    auth: state.authReducer
+  };
 };
 
 export default connect(

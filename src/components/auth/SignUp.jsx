@@ -32,6 +32,8 @@ const SignUp = ({ signupUser, auth, history }) => {
     signupUser(credentials, history);
   };
 
+  if (auth.authenticated) return <Redirect to="/create" />;
+
   return (
     <>
       <div className={style.authContainer}>

@@ -4,7 +4,7 @@ import style from "./navbar.module.css";
 import Dropdown from "./Dropdown";
 //import defaultProfilePic from "../imgAndSvg/SVG/profile.svg";
 
-const SignedInLinks = () => {
+const SignedInLinks = ({ logoutUser }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleDropdown = () => {
@@ -64,7 +64,7 @@ const SignedInLinks = () => {
           } ml-3`}
           style={{ gridRow: "1 / span 2 " }}
         />
-        <Dropdown toggle={toggle} />
+        <Dropdown toggle={toggle} logoutUser={logoutUser} />
       </li>
     </ul>
   );

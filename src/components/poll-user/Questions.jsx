@@ -18,6 +18,20 @@ const Questions = props => {
     setName(e.target.value);
   };
 
+  const handleOtherInput = (value, id) => {
+    setPolls(
+      polls.map(poll => {
+        if (poll.id === id) {
+          poll = {
+            ...poll,
+            other: value
+          };
+        }
+        return poll;
+      })
+    );
+  };
+
   const handleRadioInput = (id, value) => {
     setPolls(
       polls.map(poll => {
@@ -104,6 +118,7 @@ const Questions = props => {
       return {
         checked: poll.checked,
         radioValue: poll.radioValue,
+        other: poll.other,
         id: uuidv4(),
         date
       };
@@ -125,6 +140,8 @@ const Questions = props => {
     setMessage("Thank you for submitting the form");
     setName("");
   };
+
+  console.log(polls);
 
   return (
     <div className={styleAdmin.container}>
@@ -167,6 +184,7 @@ const Questions = props => {
                     isDisabled={isDisabled}
                     handleRadioInput={handleRadioInput}
                     handleCheckboxInput={handleCheckboxInput}
+                    handleOtherInput={handleOtherInput}
                     marginTop={"4px"}
                   />
                 </div>
@@ -202,8 +220,6 @@ const Questions = props => {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
-    profile: state.firebase.auth,
     polls: state.polls.polls
   };
 };

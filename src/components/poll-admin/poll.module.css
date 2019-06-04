@@ -23,3 +23,10 @@
   font-weight: 400;
   font-size: var(--text-fontsize-sm);
 }
+
+.otherInput {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--md-grey-color);
+  outline: none;
+}

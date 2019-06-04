@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
 import style from "./pollForm.module.css";
-import RadioInput from "../utils/RadioInput";
+import Input from "../utils/Input";
 import {
   createChoice,
   YES_NO,
   MULTIPLE_CHOICE,
-  SINGLE_CHOICE
+  SINGLE_CHOICE,
+  OTHER_CHOICE
 } from "../utils/Types";
 import Choices from "./choices/Choices";
 import Modal from "../utils/Modal";
@@ -101,7 +102,7 @@ const PollForm = props => {
     //let choiceIsIdentical;
     const questionValue = e.target.elements.question.value;
 
-    if (poll.type === YES_NO) {
+    if (poll.type === YES_NO || poll.type === OTHER_CHOICE) {
       newPoll = {
         ...poll,
         required,
@@ -138,18 +139,26 @@ const PollForm = props => {
       return;
     }
 
-    // choiceIsIdentical = poll.choices.some((choice, index) => {
-    //   if (e.target.elements.choice === undefined) {
-    //     return;
-    //   }
-
-    //   return choice.value === e.target.elements.choice[index].value;
-    // });
-
     //Submitting the form with data
     props.onSubmit(newPoll);
     //resetting form after submitting
     reset();
+  };
+
+  const renderChoices = () => {
+    if (type === YES_NO || type === OTHER_CHOICE) {
+      return null;
+    }
+
+    return (
+      <Choices
+        choices={poll.choices}
+        handleChoiceInput={handleChoiceInput}
+        addChoice={addChoice}
+        deleteChoice={deleteChoice}
+        clearChoices={clearChoices}
+      />
+    );
   };
 
   //destructuring variables off of poll
@@ -178,28 +187,44 @@ const PollForm = props => {
 
         <div className={style.inputGroup}>
           <label className={style.label}>
-            <RadioInput
+            <Input
               value={YES_NO}
               type={type === YES_NO}
               onChange={handleRadio}
+              inputType="radio"
+              className="mr-1"
             />
             Yes/No
           </label>
           <label className={style.label}>
-            <RadioInput
+            <Input
               value={MULTIPLE_CHOICE}
               type={type === MULTIPLE_CHOICE}
               onChange={handleRadio}
+              inputType="radio"
+              className="mr-1"
             />
             Multiple Choice
           </label>
           <label className={style.label}>
-            <RadioInput
+            <Input
               value={SINGLE_CHOICE}
               type={type === SINGLE_CHOICE}
               onChange={handleRadio}
+              inputType="radio"
+              className="mr-1"
             />
             Single Choice
+          </label>
+          <label className={style.label}>
+            <Input
+              value={OTHER_CHOICE}
+              type={type === OTHER_CHOICE}
+              onChange={handleRadio}
+              inputType="radio"
+              className="mr-1"
+            />
+            Other
           </label>
           <label className={style.label}>
             <input
@@ -210,16 +235,7 @@ const PollForm = props => {
             Required
           </label>
         </div>
-        {type !== YES_NO && (
-          <Choices
-            choices={poll.choices}
-            handleChoiceInput={handleChoiceInput}
-            addChoice={addChoice}
-            deleteChoice={deleteChoice}
-            clearChoices={clearChoices}
-          />
-        )}
-
+        {renderChoices()}
         <div className={style.formBtns}>
           <button type="submit" className="btn btn-submit mr-3">
             {isEdit === false ? "Add Poll" : "Edit Poll"}
