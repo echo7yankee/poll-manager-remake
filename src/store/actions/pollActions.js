@@ -21,6 +21,7 @@ export const deletePoll = id => {
 };
 
 export const clearPolls = () => {
+  localStorage.removeItem("polls");
   return {
     type: CLEAR_POLLS
   };

@@ -5,23 +5,22 @@ import style from "./profile.module.css";
 
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { uploadImage } from "../../store/actions/authActions";
 
-const Profile = ({ history, auth: { authenticated } }) => {
+const Profile = ({ history, auth: { authenticated }, uploadImage }) => {
+  const [file, setFile] = useState("");
   const [message, setMessage] = useState("");
 
-  const onChange = e => {};
+  const onChange = e => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    uploadImage(formData);
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
-
-    // if (e.target.elements.password.value.length <= 6) {
-    //   setMessage("Password must be at least 6 characters");
-    //   return;
-    // }
   };
-
-  // console.log("File: ", file);
-  // console.log("Uploaded File:", uploadedFile.filePath);
 
   if (!authenticated) return <Redirect to="/signin" />;
 
@@ -52,6 +51,7 @@ const Profile = ({ history, auth: { authenticated } }) => {
               id="customPicture"
               type="file"
               className={`${style.input} `}
+              value={file}
               onChange={onChange}
             />
           </div>
@@ -79,7 +79,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    uploadImage: formData => dispatch(uploadImage(formData))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Profile);

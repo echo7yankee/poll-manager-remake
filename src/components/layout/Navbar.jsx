@@ -9,11 +9,9 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions/authActions";
 
 const Navbar = ({ logoutUser, auth: { authenticated } }) => {
-  console.log(authenticated);
-
   return (
     <nav className={style.nav}>
-      <Link to={"/"} className={style.logo}>
+      <Link to={authenticated ? "/create" : "/"} className={style.logo}>
         M-POLLS
       </Link>
 

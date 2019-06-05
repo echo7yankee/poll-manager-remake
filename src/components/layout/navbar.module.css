@@ -75,14 +75,15 @@
 }
 
 .dropdownContainer {
-  background: var(--white-color);
+  background: var(--blue-color);
   width: 100%;
   position: absolute;
-  top: 150%;
+  top: 170%;
   text-align: center;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   overflow: hidden;
+  z-index: 5000;
 }
 
 .dropdownItems {
@@ -100,7 +101,7 @@
 .dropdownItemLink {
   text-decoration: none;
   font-size: var(--text-fontsize-sm);
-  color: var(--blue-color);
+  color: var(--white-color);
   padding: 1rem 5rem;
 }
 

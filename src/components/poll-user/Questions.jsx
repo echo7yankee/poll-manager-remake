@@ -24,7 +24,9 @@ const Questions = props => {
         if (poll.id === id) {
           poll = {
             ...poll,
-            other: value
+            other: value,
+            isChecked: true,
+            showError: false
           };
         }
         return poll;

@@ -48,6 +48,18 @@ export const logoutUser = () => dispatch => {
   });
 };
 
+export const uploadImage = formData => dispatch => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("user/image", formData)
+    .then(res => {
+      // YOU NEED TO GET users/user from firebase
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 const setAuthorizationHeader = token => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem("FBIdToken", FBIdToken);

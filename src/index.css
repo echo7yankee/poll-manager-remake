@@ -315,7 +315,7 @@ body {
 }
 
 .hover-darker:hover {
-  background: #ebebeb !important;
+  background: var(--blue-color-hover) !important;
   transition: background 0.3s, color 0.1s;
 }
 

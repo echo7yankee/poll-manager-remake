@@ -26,7 +26,7 @@ const Summary = props => {
 
   return (
     <div className={styleCreate.container}>
-      {polls.length === 0 ? (
+      {props.answers.length === 0 ? (
         <div className="text-center">
           <p className="error error-red">
             There are no questions at the moment.
