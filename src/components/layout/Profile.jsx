@@ -49,8 +49,7 @@ const Profile = ({
         <form onSubmit={handleSubmit}>
           <h4>Edit your username:</h4>
           <div className={style.inputGroup}>
-            <input type="text" placeholder="Firstname" className="input mb-3" />
-            <input type="text" placeholder="Lastname" className="input mb-3" />
+            <input type="text" placeholder="Name" className="input mb-3" />
             <input
               name="password"
               type="password"

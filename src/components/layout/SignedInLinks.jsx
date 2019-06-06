@@ -11,8 +11,6 @@ const SignedInLinks = ({ logoutUser, user }) => {
     setToggle(toggle => !toggle);
   };
 
-  console.log(user);
-
   return (
     <ul className={style.navItems}>
       <li className={`${style.navItem} `}>
@@ -58,7 +56,7 @@ const SignedInLinks = ({ logoutUser, user }) => {
         <span className={`${style.navLink} ${style.blueText}`}>
           Signed in as
         </span>{" "}
-        {/* <span className={`${style.initials} ml-2 `}>{profile.initials}</span> */}
+        <span className={`${style.initials} ml-2 `}>{user.handle}</span>
         <div className={style.profilePicContainer}>
           <img
             src={Object.keys(user).length === 0 ? noImg : user.imageUrl}

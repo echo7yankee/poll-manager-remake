@@ -53,7 +53,6 @@
 .initials {
   border-radius: 50%;
   color: #ff6f61;
-  text-decoration: underline;
   font-size: var(--text-fontsize-md);
 }
 
