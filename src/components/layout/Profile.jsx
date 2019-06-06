@@ -1,26 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import spinner from "../imgAndSvg/GIF/spinner.gif";
 
 import styleCreate from "../poll-admin/createPoll.module.css";
 import style from "./profile.module.css";
 
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { uploadImage } from "../../store/actions/authActions";
+import { uploadImage, getUserData } from "../../store/actions/authActions";
 
-const Profile = ({ history, auth: { authenticated }, uploadImage }) => {
-  const [file, setFile] = useState("");
+const Profile = ({
+  history,
+  auth: { authenticated, isLoading, user },
+  uploadImage,
+  getUserData
+}) => {
   const [message, setMessage] = useState("");
+  const [label, setLabel] = useState("Choose a profile picture...");
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
 
   const onChange = e => {
     const image = e.target.files[0];
     const formData = new FormData();
+
+    //Check if image changes
+    if (!image) return null;
+
     formData.append("image", image, image.name);
+    setLabel(image.name);
     uploadImage(formData);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
   };
+
+  console.log(isLoading);
 
   if (!authenticated) return <Redirect to="/signin" />;
 
@@ -44,16 +61,23 @@ const Profile = ({ history, auth: { authenticated }, uploadImage }) => {
           <h4>Change your picture:</h4>
           <div className={style.inputGroup}>
             <label htmlFor="customPicture" className={style.label}>
-              <span className={style.labelTxt}>label</span>
+              <span className={style.labelTxt}>{label}</span>
               <span className={`${style.labelBtn} hover-blue`}>Browse</span>
             </label>
             <input
               id="customPicture"
               type="file"
               className={`${style.input} `}
-              value={file}
               onChange={onChange}
             />
+          </div>
+
+          <div className={style.imageContainer}>
+            {isLoading && (
+              <img src={spinner} alt="spinner" className={style.spinner} />
+            )}
+            <img src={user.imageUrl} alt="profile" className={style.image} />
+            )}
           </div>
 
           <button
@@ -61,7 +85,7 @@ const Profile = ({ history, auth: { authenticated }, uploadImage }) => {
           `}
             type="submit"
           >
-            Set Picture
+            Save
           </button>
         </form>
 
@@ -81,7 +105,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    uploadImage: formData => dispatch(uploadImage(formData))
+    uploadImage: formData => dispatch(uploadImage(formData)),
+    getUserData: () => dispatch(getUserData())
   };
 };
 

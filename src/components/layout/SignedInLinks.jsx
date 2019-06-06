@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import style from "./navbar.module.css";
 import Dropdown from "./Dropdown";
-//import defaultProfilePic from "../imgAndSvg/SVG/profile.svg";
+import noImg from "../imgAndSvg/no-img.png";
 
-const SignedInLinks = ({ logoutUser }) => {
+const SignedInLinks = ({ logoutUser, user }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleDropdown = () => {
     setToggle(toggle => !toggle);
   };
+
+  console.log(user);
 
   return (
     <ul className={style.navItems}>
@@ -57,7 +59,13 @@ const SignedInLinks = ({ logoutUser }) => {
           Signed in as
         </span>{" "}
         {/* <span className={`${style.initials} ml-2 `}>{profile.initials}</span> */}
-        <div className={style.profilePicContainer}>{/* <img /> */}</div>
+        <div className={style.profilePicContainer}>
+          <img
+            src={Object.keys(user).length === 0 ? noImg : user.imageUrl}
+            alt="profile"
+            style={{ width: "100%", height: "auto" }}
+          />
+        </div>
         <i
           className={`arrow ${
             toggle === true ? "arrow-down" : "arrow-right"

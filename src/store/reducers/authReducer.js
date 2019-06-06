@@ -3,13 +3,15 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   SET_AUTHENTICATED,
-  SET_UNAUTHENTICATED
+  SET_UNAUTHENTICATED,
+  GET_AUTHENTICATED_USER
 } from "../types";
 
 const initialState = {
   isLoading: false,
   authenticated: false,
-  errors: {}
+  errors: {},
+  user: {}
 };
 
 const authReducer = (state = initialState, action) => {
@@ -22,12 +24,18 @@ const authReducer = (state = initialState, action) => {
     case SET_UNAUTHENTICATED:
       return initialState;
 
-    case LOADING_USER: {
+    case LOADING_USER:
       return {
         ...state,
         isLoading: true
       };
-    }
+
+    case GET_AUTHENTICATED_USER:
+      return {
+        ...state,
+        isLoading: false,
+        user: action.payload
+      };
 
     case CLEAR_ERRORS: {
       return {

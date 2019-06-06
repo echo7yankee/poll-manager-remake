@@ -4,6 +4,7 @@ export const SET_ERRORS = "SET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_UNAUTHENTICATED = "SET_UNAUTHENTICATED";
+export const GET_AUTHENTICATED_USER = "GET_AUTHENTICATED_USER";
 //Poll types
 export const ADD_POLL = "ADD_POLL";
 export const DELETE_POLL = "DELETE_POLL";

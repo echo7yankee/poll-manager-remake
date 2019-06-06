@@ -3,7 +3,8 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   SET_UNAUTHENTICATED,
-  SET_AUTHENTICATED
+  SET_AUTHENTICATED,
+  GET_AUTHENTICATED_USER
 } from "../types";
 import axios from "axios";
 
@@ -52,12 +53,22 @@ export const uploadImage = formData => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
     .post("user/image", formData)
-    .then(res => {
-      // YOU NEED TO GET users/user from firebase
+    .then(() => {
+      dispatch(getUserData());
     })
     .catch(err => {
       console.log(err);
     });
+};
+
+export const getUserData = () => dispatch => {
+  dispatch({ type: LOADING_USER });
+  axios.get("/user").then(res => {
+    dispatch({
+      type: GET_AUTHENTICATED_USER,
+      payload: res.data.credentials
+    });
+  });
 };
 
 const setAuthorizationHeader = token => {
