@@ -10,11 +10,10 @@ import { uploadImage, getUserData } from "../../store/actions/authActions";
 
 const Profile = ({
   history,
-  auth: { authenticated, isLoading, user },
+  auth: { authenticated, isLoading, user, errors, message },
   uploadImage,
   getUserData
 }) => {
-  const [message, setMessage] = useState("");
   const [label, setLabel] = useState("Choose a profile picture...");
 
   useEffect(() => {
@@ -30,14 +29,17 @@ const Profile = ({
 
     formData.append("image", image, image.name);
     setLabel(image.name);
+    if (image.name.includes(".txt")) {
+      setLabel("Wrong file type");
+    }
     uploadImage(formData);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-  };
 
-  console.log(isLoading);
+    history.push("/create");
+  };
 
   if (!authenticated) return <Redirect to="/signin" />;
 
@@ -89,7 +91,8 @@ const Profile = ({
         </form>
 
         <div className="justify-center">
-          {message && <p className="error error-red">{message}</p>}
+          {errors && <p className="error error-red">{errors.error}</p>}
+          {message && <p className="message message-green">{message}</p>}
         </div>
       </div>
     </div>

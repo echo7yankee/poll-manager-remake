@@ -139,7 +139,7 @@ const Questions = props => {
 
     props.getAnswers(answers);
     setIsDisabled(true);
-    setMessage("Thank you for submitting the form");
+    setMessage("Form has been submitted successfully");
     setName("");
   };
 

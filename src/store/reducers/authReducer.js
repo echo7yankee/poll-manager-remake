@@ -4,14 +4,16 @@ import {
   CLEAR_ERRORS,
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
-  GET_AUTHENTICATED_USER
+  GET_AUTHENTICATED_USER,
+  IMG_UPLOADED_SUCCESSFULY
 } from "../types";
 
 const initialState = {
   isLoading: false,
   authenticated: false,
   errors: {},
-  user: {}
+  user: {},
+  message: ""
 };
 
 const authReducer = (state = initialState, action) => {
@@ -35,6 +37,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         user: action.payload
+      };
+
+    case IMG_UPLOADED_SUCCESSFULY:
+      return {
+        ...state,
+        message: action.payload
       };
 
     case CLEAR_ERRORS: {

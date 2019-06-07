@@ -68,6 +68,7 @@
   color: #ffffff;
   border: 1px solid var(--md-grey-color);
   outline: none;
+  cursor: default;
 }
 
 .spinner {

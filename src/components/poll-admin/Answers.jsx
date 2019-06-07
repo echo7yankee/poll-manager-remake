@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import styleCreate from "./createPoll.module.css";
 import style from "./summary.module.css";
 
 const Answers = props => {
   const [answers, setAnswers] = useState(props.answers);
+  dayjs.extend(relativeTime);
 
   const toggleAccordion = id => {
     setAnswers(
@@ -37,7 +40,7 @@ const Answers = props => {
               <div
                 className={`${
                   styleCreate.pollContainer
-                }   no-row-gap cursor-pointer hover-darker border-none`}
+                }   no-row-gap cursor-pointer hover-darker-grey border-none`}
                 onClick={() => toggleAccordion(answer.id)}
               >
                 <span
@@ -50,7 +53,11 @@ const Answers = props => {
                   {indexAnswer + 1}
                 </span>
                 <p className={style.title}>{answer.user.name}</p>
+
                 <span style={{ gridColumn: "2" }}>{answer.user.date}</span>
+                <span style={{ gridColumn: "2" }}>
+                  {dayjs(answer.user.date).fromNow()}
+                </span>
                 <i
                   className={`arrow ${
                     answer.toggle === true ? "arrow-down" : "arrow-right"
@@ -59,8 +66,6 @@ const Answers = props => {
                 />
               </div>
               {props.polls.map((poll, index) => {
-                console.log(answer.answer[index].radioValue);
-
                 return (
                   <div
                     key={poll.id}

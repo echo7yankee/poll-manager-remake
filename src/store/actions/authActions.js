@@ -4,7 +4,8 @@ import {
   CLEAR_ERRORS,
   SET_UNAUTHENTICATED,
   SET_AUTHENTICATED,
-  GET_AUTHENTICATED_USER
+  GET_AUTHENTICATED_USER,
+  IMG_UPLOADED_SUCCESSFULY
 } from "../types";
 import axios from "axios";
 
@@ -55,11 +56,18 @@ export const uploadImage = formData => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
     .post("user/image", formData)
-    .then(() => {
+    .then(res => {
+      dispatch({
+        type: IMG_UPLOADED_SUCCESSFULY,
+        payload: res.data.message
+      });
       dispatch(getUserData());
     })
     .catch(err => {
-      console.log(err);
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
     });
 };
 
