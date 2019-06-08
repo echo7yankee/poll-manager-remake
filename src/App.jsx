@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import SignIn from "./components/auth/SignIn";
@@ -9,7 +9,15 @@ import Dashboard from "./components/poll-user/Dashboard";
 import Answers from "./components/poll-admin/Answers";
 import Profile from "./components/layout/Profile";
 
-const App = () => {
+//Redux
+import { connect } from "react-redux";
+import { getPolls } from "./store/actions/pollActions";
+
+const App = ({ getPolls }) => {
+  useEffect(() => {
+    getPolls();
+  }, [getPolls]);
+
   return (
     <BrowserRouter>
       <div>
@@ -33,4 +41,13 @@ const App = () => {
   );
 };
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    getPolls: () => dispatch(getPolls())
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);

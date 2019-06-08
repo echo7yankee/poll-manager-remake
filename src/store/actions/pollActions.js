@@ -1,23 +1,44 @@
 import {
-  ADD_POLL,
   DELETE_POLL,
   EDIT_POLL,
   TOGGLE_EDIT,
-  CLEAR_POLLS
+  CLEAR_POLLS,
+  GET_POLLS,
+  POST_POLL,
+  LOADING_UI_POST,
+  LOADING_UI_DELETE,
+  LOADING_UI_GET
 } from "../types";
 
-export const addPoll = newPoll => {
-  return {
-    type: ADD_POLL,
-    payload: newPoll
-  };
+import axios from "axios";
+
+export const getPolls = () => dispatch => {
+  dispatch({ type: LOADING_UI_GET });
+  axios.get("polls").then(res => {
+    dispatch({ type: GET_POLLS, payload: res.data });
+  });
 };
 
-export const deletePoll = id => {
-  return {
-    type: DELETE_POLL,
-    id
-  };
+export const postPoll = newPoll => dispatch => {
+  dispatch({ type: LOADING_UI_POST });
+  axios.post("/poll", newPoll).then(res => {
+    dispatch({
+      type: POST_POLL,
+      payload: res.data
+    });
+  });
+};
+
+export const deletePoll = id => dispatch => {
+  dispatch({ type: LOADING_UI_DELETE });
+  axios
+    .delete(`/poll/${id}`)
+    .then(() => {
+      dispatch({ type: DELETE_POLL, id });
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
 
 export const clearPolls = () => {

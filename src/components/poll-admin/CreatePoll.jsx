@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createPoll } from "../utils/Types";
 import {
-  addPoll,
+  postPoll,
   deletePoll,
   clearPolls,
   toggleEdit,
@@ -13,14 +13,18 @@ import style from "./createPoll.module.css";
 import PollForm from "./PollForm";
 import Poll from "./Poll";
 
+import spinner from "../imgAndSvg/GIF/spinner.gif";
+
 const CreatePoll = ({
   polls,
-  addPoll,
+  postPoll,
   deletePoll,
   clearPolls,
   toggleEdit,
   editPoll,
-  auth: { authenticated }
+  auth: { authenticated },
+  isLoadingPost,
+  isLoadingDelete
 }) => {
   if (!authenticated) return <Redirect to="/signin" />;
 
@@ -38,9 +42,15 @@ const CreatePoll = ({
           <PollForm
             polls={polls}
             poll={createPoll()}
-            onSubmit={addPoll}
+            onSubmit={postPoll}
             clearPolls={clearPolls}
           />
+
+          {isLoadingPost && (
+            <div style={{ gridColumn: "2" }} className="container-center">
+              <img src={spinner} alt="spinner" style={{ width: "30px" }} />
+            </div>
+          )}
         </div>
 
         {polls.map((poll, index) => {
@@ -62,6 +72,7 @@ const CreatePoll = ({
                   toggleEdit={toggleEdit}
                   showIcons={true}
                   isDisabled={true}
+                  isLoadingDelete={isLoadingDelete}
                 />
               ) : (
                 <PollForm
@@ -82,13 +93,15 @@ const CreatePoll = ({
 const mapStateToProps = state => {
   return {
     polls: state.polls.polls,
+    isLoadingPost: state.polls.isLoadingPost,
+    isLoadingDelete: state.polls.isLoadingDelete,
     auth: state.authReducer
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPoll: newPoll => dispatch(addPoll(newPoll)),
+    postPoll: newPoll => dispatch(postPoll(newPoll)),
     deletePoll: id => dispatch(deletePoll(id)),
     clearPolls: () => dispatch(clearPolls()),
     toggleEdit: id => dispatch(toggleEdit(id)),

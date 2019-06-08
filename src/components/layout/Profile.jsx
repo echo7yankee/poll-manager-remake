@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import spinner from "../imgAndSvg/GIF/spinner.gif";
 
 import styleCreate from "../poll-admin/createPoll.module.css";
@@ -6,19 +6,14 @@ import style from "./profile.module.css";
 
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { uploadImage, getUserData } from "../../store/actions/authActions";
+import { uploadImage } from "../../store/actions/authActions";
 
 const Profile = ({
   history,
   auth: { authenticated, isLoading, user, errors, message },
-  uploadImage,
-  getUserData
+  uploadImage
 }) => {
   const [label, setLabel] = useState("Choose a profile picture...");
-
-  useEffect(() => {
-    getUserData();
-  }, [getUserData]);
 
   const onChange = e => {
     const image = e.target.files[0];
@@ -107,8 +102,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    uploadImage: formData => dispatch(uploadImage(formData)),
-    getUserData: () => dispatch(getUserData())
+    uploadImage: formData => dispatch(uploadImage(formData))
   };
 };
 

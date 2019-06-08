@@ -10,8 +10,10 @@ import { logoutUser, getUserData } from "../../store/actions/authActions";
 
 const Navbar = ({ logoutUser, auth: { authenticated, user }, getUserData }) => {
   useEffect(() => {
-    getUserData();
-  }, [getUserData]);
+    if (authenticated) {
+      getUserData();
+    }
+  }, [authenticated, getUserData]);
 
   return (
     <nav className={style.nav}>

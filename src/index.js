@@ -26,14 +26,14 @@ const store = createStore(
   )
 );
 
-store.subscribe(
-  throttle(() => {
-    saveState({
-      polls: store.getState().polls,
-      answers: store.getState().answers
-    });
-  }, 1000)
-);
+// store.subscribe(
+//   throttle(() => {
+//     saveState({
+//       polls: store.getState().polls,
+//       answers: store.getState().answers
+//     });
+//   }, 1000)
+// );
 
 const token = localStorage.FBIdToken;
 if (token) {

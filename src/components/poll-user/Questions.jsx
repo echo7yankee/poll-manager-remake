@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getAnswers } from "../../store/actions/answersActions";
+import spinner from "../imgAndSvg/GIF/spinner.gif";
 
 import styleAdmin from "../poll-admin/createPoll.module.css";
 import Poll from "../poll-admin/Poll";
@@ -8,11 +9,15 @@ import Notifications from "./Notifications";
 import uuidv4 from "uuid/v4";
 
 const Questions = props => {
-  const [polls, setPolls] = useState(props.polls);
+  const [polls, setPolls] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setPolls(props.polls);
+  }, [props.polls, setPolls]);
 
   const handleInput = e => {
     setName(e.target.value);
@@ -143,11 +148,13 @@ const Questions = props => {
     setName("");
   };
 
-  console.log(polls);
-
   return (
     <div className={styleAdmin.container}>
-      {polls.length === 0 ? (
+      {props.isLoadingGet ? (
+        <div className="container-center">
+          <img src={spinner} alt="spinner" style={{ width: "80px" }} />
+        </div>
+      ) : polls.length === 0 ? (
         <div className="text-center">
           <p className="error error-red">
             There are no questions at the moment.
@@ -222,7 +229,8 @@ const Questions = props => {
 
 const mapStateToProps = state => {
   return {
-    polls: state.polls.polls
+    polls: state.polls.polls,
+    isLoadingGet: state.polls.isLoadingGet
   };
 };
 
