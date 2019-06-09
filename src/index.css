@@ -139,13 +139,15 @@ body {
   font-weight: 400;
   font-size: var(--text-fontsize-sm);
   cursor: pointer;
+  position: relative;
 }
 
 .btn:focus {
   outline: none;
 }
 
-.btn-submit {
+.btn-submit,
+.btn-submit-disabled {
   padding: 1rem 1.5rem;
   border: 1px solid var(--white-color);
   color: var(--white-color);
@@ -160,12 +162,21 @@ body {
   background: var(--blue-color-hover);
 }
 
+.btn-submit-disabled {
+  background: var(--md-grey-color);
+  cursor: pointer;
+}
+
 .btn-blue-text {
   color: var(--blue-color);
 }
 
 .btn-blue-text:hover {
   color: var(--blue-color-hover);
+}
+
+.btn-grey-text {
+  color: var(--md-grey-color);
 }
 
 .btn-grey {

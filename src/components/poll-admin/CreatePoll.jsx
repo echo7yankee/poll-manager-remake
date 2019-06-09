@@ -13,8 +13,6 @@ import style from "./createPoll.module.css";
 import PollForm from "./PollForm";
 import Poll from "./Poll";
 
-import spinner from "../imgAndSvg/GIF/spinner.gif";
-
 const CreatePoll = ({
   polls,
   postPoll,
@@ -24,7 +22,7 @@ const CreatePoll = ({
   editPoll,
   auth: { authenticated },
   isLoadingPost,
-  isLoadingDelete
+  isLoadingClear
 }) => {
   if (!authenticated) return <Redirect to="/signin" />;
 
@@ -44,13 +42,9 @@ const CreatePoll = ({
             poll={createPoll()}
             onSubmit={postPoll}
             clearPolls={clearPolls}
+            isLoadingPost={isLoadingPost}
+            isLoadingClear={isLoadingClear}
           />
-
-          {isLoadingPost && (
-            <div style={{ gridColumn: "2" }} className="container-center">
-              <img src={spinner} alt="spinner" style={{ width: "30px" }} />
-            </div>
-          )}
         </div>
 
         {polls.map((poll, index) => {
@@ -72,7 +66,6 @@ const CreatePoll = ({
                   toggleEdit={toggleEdit}
                   showIcons={true}
                   isDisabled={true}
-                  isLoadingDelete={isLoadingDelete}
                 />
               ) : (
                 <PollForm
@@ -80,6 +73,8 @@ const CreatePoll = ({
                   poll={poll}
                   onSubmit={editPoll}
                   toggleEdit={toggleEdit}
+                  isLoadingPost={isLoadingPost}
+                  isLoadingClear={isLoadingClear}
                 />
               )}
             </div>
@@ -94,7 +89,7 @@ const mapStateToProps = state => {
   return {
     polls: state.polls.polls,
     isLoadingPost: state.polls.isLoadingPost,
-    isLoadingDelete: state.polls.isLoadingDelete,
+    isLoadingClear: state.polls.isLoadingClear,
     auth: state.authReducer
   };
 };

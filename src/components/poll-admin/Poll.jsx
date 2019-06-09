@@ -17,11 +17,8 @@ const Poll = ({
   handleRadioInput,
   handleCheckboxInput,
   handleOtherInput,
-  marginTop,
-  isLoadingDelete
+  marginTop
 }) => {
-  console.log(isLoadingDelete);
-
   return (
     <div className={`${pStyle.poll}`} style={{ marginTop }}>
       <span className={style.title}>
@@ -30,7 +27,7 @@ const Poll = ({
       <span className={`${pStyle.text}`}>{poll.value}</span>
       <span className={`${style.title} ${pStyle.title}`}>Answers:</span>
       {showIcons &&
-        (isLoadingDelete ? (
+        (poll.isLoadingDelete ? (
           <img
             src={spinner}
             alt="spinner"

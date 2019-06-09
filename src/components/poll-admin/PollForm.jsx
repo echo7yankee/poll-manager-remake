@@ -11,6 +11,7 @@ import {
 } from "../utils/Types";
 import Choices from "./choices/Choices";
 import Modal from "../utils/Modal";
+import spinner from "../imgAndSvg/GIF/spinner.gif";
 
 const PollForm = props => {
   const [poll, setPoll] = useState(props.poll);
@@ -237,17 +238,30 @@ const PollForm = props => {
         </div>
         {renderChoices()}
         <div className={style.formBtns}>
-          <button type="submit" className="btn btn-submit mr-3">
+          <button
+            type="submit"
+            className={`btn ${
+              props.isLoadingPost ? "btn-submit-disabled" : "btn-submit"
+            } mr-3`}
+          >
+            {props.isLoadingPost && (
+              <img src={spinner} alt="spinner" className={style.spinner} />
+            )}
             {isEdit === false ? "Add Poll" : "Edit Poll"}
           </button>
           <button
             type="button"
-            className="btn btn-blue-text"
+            className={`btn ${
+              props.isLoadingClear ? "btn-grey-text" : "btn-blue-text"
+            }`}
             disabled={props.polls.length >= 1 ? false : true}
             onClick={
               isEdit === false ? toggleModal : () => props.toggleEdit(poll.id)
             }
           >
+            {props.isLoadingClear && (
+              <img src={spinner} alt="spinner" className={style.spinner} />
+            )}
             {isEdit === false ? "- Clear Polls" : "Cancel"}
           </button>
         </div>

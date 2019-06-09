@@ -7,13 +7,14 @@ import {
   GET_POLLS,
   LOADING_UI_POST,
   LOADING_UI_DELETE,
-  LOADING_UI_GET
+  LOADING_UI_GET,
+  LOADING_UI_CLEAR
 } from "../types";
 
 const initialState = {
   polls: [],
   isLoadingPost: false,
-  isLoadingDelete: false,
+  isLoadingClear: false,
   isLoadingGet: false
 };
 
@@ -27,7 +28,20 @@ const pollReducer = (state = initialState, action) => {
     case LOADING_UI_DELETE:
       return {
         ...state,
-        isLoadingDelete: true
+        polls: state.polls.map(poll => {
+          if (poll.id === action.id) {
+            poll = {
+              ...poll,
+              isLoadingDelete: true
+            };
+          }
+          return poll;
+        })
+      };
+    case LOADING_UI_CLEAR:
+      return {
+        ...state,
+        isLoadingClear: true
       };
     case LOADING_UI_GET:
       return {
@@ -59,7 +73,8 @@ const pollReducer = (state = initialState, action) => {
     case CLEAR_POLLS:
       return {
         ...state,
-        polls: []
+        polls: [],
+        isLoadingClear: false
       };
 
     case TOGGLE_EDIT:

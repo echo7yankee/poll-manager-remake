@@ -7,7 +7,8 @@ import {
   POST_POLL,
   LOADING_UI_POST,
   LOADING_UI_DELETE,
-  LOADING_UI_GET
+  LOADING_UI_GET,
+  LOADING_UI_CLEAR
 } from "../types";
 
 import axios from "axios";
@@ -30,7 +31,7 @@ export const postPoll = newPoll => dispatch => {
 };
 
 export const deletePoll = id => dispatch => {
-  dispatch({ type: LOADING_UI_DELETE });
+  dispatch({ type: LOADING_UI_DELETE, id });
   axios
     .delete(`/poll/${id}`)
     .then(() => {
@@ -41,11 +42,12 @@ export const deletePoll = id => dispatch => {
     });
 };
 
-export const clearPolls = () => {
-  localStorage.removeItem("polls");
-  return {
-    type: CLEAR_POLLS
-  };
+export const clearPolls = () => dispatch => {
+  dispatch({ type: LOADING_UI_CLEAR });
+
+  axios.delete("/polls").then(() => {
+    dispatch({ type: CLEAR_POLLS });
+  });
 };
 
 export const toggleEdit = id => {
