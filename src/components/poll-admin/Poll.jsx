@@ -17,7 +17,8 @@ const Poll = ({
   handleRadioInput,
   handleCheckboxInput,
   handleOtherInput,
-  marginTop
+  marginTop,
+  flag
 }) => {
   return (
     <div className={`${pStyle.poll}`} style={{ marginTop }}>
@@ -31,11 +32,11 @@ const Poll = ({
           <img
             src={spinner}
             alt="spinner"
-            style={{ gridColumn: "3", gridRow: "1", width: "30px" }}
+            style={{ gridColumn: "3", gridRow: "1", width: "28px" }}
           />
         ) : (
           <div className={pStyle.iconsContainer}>
-            <span className="mr-2" onClick={() => toggleEdit(poll.id)}>
+            <span className="mr-2" onClick={() => toggleEdit(poll)}>
               <EditIcon icon="icon icon-green" />
             </span>
             <span onClick={() => deletePoll(poll.id)}>

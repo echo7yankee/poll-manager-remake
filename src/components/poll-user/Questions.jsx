@@ -151,7 +151,7 @@ const Questions = props => {
   return (
     <div className={styleAdmin.container}>
       {props.isLoadingGet ? (
-        <div className="container-center">
+        <div className="container-center mt-5">
           <img src={spinner} alt="spinner" style={{ width: "80px" }} />
         </div>
       ) : polls.length === 0 ? (

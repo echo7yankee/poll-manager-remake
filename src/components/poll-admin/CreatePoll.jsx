@@ -12,17 +12,16 @@ import {
 import style from "./createPoll.module.css";
 import PollForm from "./PollForm";
 import Poll from "./Poll";
+import spinner from "../imgAndSvg/GIF/spinner.gif";
 
 const CreatePoll = ({
-  polls,
+  polls: { isLoadingClear, isLoadingGet, isLoadingPost, errors, polls },
   postPoll,
   deletePoll,
   clearPolls,
   toggleEdit,
   editPoll,
-  auth: { authenticated },
-  isLoadingPost,
-  isLoadingClear
+  auth: { authenticated }
 }) => {
   if (!authenticated) return <Redirect to="/signin" />;
 
@@ -44,10 +43,20 @@ const CreatePoll = ({
             clearPolls={clearPolls}
             isLoadingPost={isLoadingPost}
             isLoadingClear={isLoadingClear}
+            errors={errors}
           />
         </div>
 
+        {isLoadingGet && (
+          <div className="container-center mt-5">
+            <img src={spinner} alt="spinner" style={{ width: "80px" }} />
+          </div>
+        )}
+
         {polls.map((poll, index) => {
+          let flag;
+          poll.isLoadingEdit ? (flag = true) : (flag = false);
+
           return (
             <div key={poll.id} className={`${style.pollContainer} no-row-gap`}>
               <span
@@ -75,6 +84,8 @@ const CreatePoll = ({
                   toggleEdit={toggleEdit}
                   isLoadingPost={isLoadingPost}
                   isLoadingClear={isLoadingClear}
+                  errors={errors}
+                  flag={flag}
                 />
               )}
             </div>
@@ -87,9 +98,7 @@ const CreatePoll = ({
 
 const mapStateToProps = state => {
   return {
-    polls: state.polls.polls,
-    isLoadingPost: state.polls.isLoadingPost,
-    isLoadingClear: state.polls.isLoadingClear,
+    polls: state.polls,
     auth: state.authReducer
   };
 };
@@ -99,7 +108,7 @@ const mapDispatchToProps = dispatch => {
     postPoll: newPoll => dispatch(postPoll(newPoll)),
     deletePoll: id => dispatch(deletePoll(id)),
     clearPolls: () => dispatch(clearPolls()),
-    toggleEdit: id => dispatch(toggleEdit(id)),
+    toggleEdit: poll => dispatch(toggleEdit(poll)),
     editPoll: poll => dispatch(editPoll(poll))
   };
 };

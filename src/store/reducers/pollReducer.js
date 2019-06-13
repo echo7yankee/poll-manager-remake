@@ -8,11 +8,14 @@ import {
   LOADING_UI_POST,
   LOADING_UI_DELETE,
   LOADING_UI_GET,
-  LOADING_UI_CLEAR
+  LOADING_UI_CLEAR,
+  SET_POLLS_ERRORS,
+  LOADING_UI_EDIT
 } from "../types";
 
 const initialState = {
   polls: [],
+  errors: {},
   isLoadingPost: false,
   isLoadingClear: false,
   isLoadingGet: false
@@ -20,10 +23,31 @@ const initialState = {
 
 const pollReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_POLLS:
+      return {
+        ...state,
+        polls: action.payload,
+        isLoadingGet: false
+      };
+
     case LOADING_UI_POST:
       return {
         ...state,
         isLoadingPost: true
+      };
+    case LOADING_UI_EDIT:
+      return {
+        ...state,
+        polls: state.polls.map(poll => {
+          if (poll.id === action.payload.id) {
+            poll = {
+              ...action.payload,
+              isLoadingEdit: true
+            };
+          }
+
+          return poll;
+        })
       };
     case LOADING_UI_DELETE:
       return {
@@ -35,6 +59,7 @@ const pollReducer = (state = initialState, action) => {
               isLoadingDelete: true
             };
           }
+
           return poll;
         })
       };
@@ -48,12 +73,6 @@ const pollReducer = (state = initialState, action) => {
         ...state,
         isLoadingGet: true
       };
-    case GET_POLLS:
-      return {
-        ...state,
-        polls: action.payload,
-        isLoadingGet: false
-      };
 
     case POST_POLL:
       return {
@@ -66,8 +85,7 @@ const pollReducer = (state = initialState, action) => {
         ...state,
         polls: state.polls.filter(poll => {
           return poll.id !== action.id;
-        }),
-        isLoadingDelete: false
+        })
       };
 
     case CLEAR_POLLS:
@@ -81,10 +99,10 @@ const pollReducer = (state = initialState, action) => {
       return {
         ...state,
         polls: state.polls.map(poll => {
-          if (poll.id === action.id) {
+          if (poll.id === action.payload.id) {
             poll = {
               ...poll,
-              isEdit: !poll.isEdit
+              isEdit: !action.payload.isEdit
             };
           }
           return poll;
@@ -98,11 +116,20 @@ const pollReducer = (state = initialState, action) => {
           if (poll.id === action.payload.id) {
             poll = {
               ...action.payload,
-              isEdit: false
+              isEdit: false,
+              isLoadingEdit: false
             };
           }
+
           return poll;
         })
+      };
+
+    case SET_POLLS_ERRORS:
+      return {
+        ...state,
+        errors: action.payload,
+        isLoadingPost: false
       };
 
     default:

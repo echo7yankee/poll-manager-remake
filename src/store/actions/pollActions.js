@@ -8,7 +8,9 @@ import {
   LOADING_UI_POST,
   LOADING_UI_DELETE,
   LOADING_UI_GET,
-  LOADING_UI_CLEAR
+  LOADING_UI_CLEAR,
+  LOADING_UI_EDIT,
+  SET_POLLS_ERRORS
 } from "../types";
 
 import axios from "axios";
@@ -22,12 +24,20 @@ export const getPolls = () => dispatch => {
 
 export const postPoll = newPoll => dispatch => {
   dispatch({ type: LOADING_UI_POST });
-  axios.post("/poll", newPoll).then(res => {
-    dispatch({
-      type: POST_POLL,
-      payload: res.data
+  axios
+    .post("/poll", newPoll)
+    .then(res => {
+      dispatch({
+        type: POST_POLL,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_POLLS_ERRORS,
+        payload: err.response.data
+      });
     });
-  });
 };
 
 export const deletePoll = id => dispatch => {
@@ -50,16 +60,24 @@ export const clearPolls = () => dispatch => {
   });
 };
 
-export const toggleEdit = id => {
+export const toggleEdit = poll => {
   return {
     type: TOGGLE_EDIT,
-    id
+    payload: poll
   };
 };
 
-export const editPoll = poll => {
-  return {
-    type: EDIT_POLL,
-    payload: poll
-  };
+export const editPoll = poll => dispatch => {
+  dispatch({ type: LOADING_UI_EDIT, payload: poll });
+  axios
+    .put(`/poll/${poll.id}`, poll)
+    .then(() => {
+      dispatch({
+        type: EDIT_POLL,
+        payload: poll
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };

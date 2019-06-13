@@ -16,7 +16,6 @@ import spinner from "../imgAndSvg/GIF/spinner.gif";
 const PollForm = props => {
   const [poll, setPoll] = useState(props.poll);
   const [required, setRequired] = useState(false);
-  const [error, setError] = useState("");
   const [modal, setModal] = useState(false);
 
   const handleQuestionInput = e => {
@@ -87,13 +86,8 @@ const PollForm = props => {
     props.clearPolls();
   };
 
-  const showError = text => {
-    setError(text);
-  };
-
   const reset = () => {
     setPoll(props.poll);
-    setError("");
   };
 
   const handleSubmit = e => {
@@ -115,7 +109,6 @@ const PollForm = props => {
       });
       //Form validation -- checks if at least two choices are filled
       if (filledInChoices.length < 2) {
-        showError("At least two choices are required for submitting the form");
         return;
       }
 
@@ -126,24 +119,19 @@ const PollForm = props => {
       };
     }
 
-    //Form validation -- checks for empty input
-    if (poll.value === "") {
-      showError("Field cannot be empty");
-      return;
-    }
     //Form validation -- checks for identical questions
     questionIsIdentical = props.polls.some(question => {
       return question.value === questionValue;
     });
     if (questionIsIdentical === true) {
-      showError("You have already inserted this value");
       return;
     }
 
     //Submitting the form with data
+
     props.onSubmit(newPoll);
     //resetting form after submitting
-    reset();
+    !poll.isEdit && reset();
   };
 
   const renderChoices = () => {
@@ -165,6 +153,8 @@ const PollForm = props => {
   //destructuring variables off of poll
   const { value, type, isEdit } = poll;
 
+  console.log(poll.value);
+
   return (
     <>
       <form className={style.form} onSubmit={handleSubmit}>
@@ -182,9 +172,7 @@ const PollForm = props => {
           onChange={handleQuestionInput}
         />
 
-        <span htmlFor="" className={`${style.title} alignself-start`}>
-          Answers:
-        </span>
+        <span className={`${style.title} alignself-start`}>Answers:</span>
 
         <div className={style.inputGroup}>
           <label className={style.label}>
@@ -240,13 +228,24 @@ const PollForm = props => {
         <div className={style.formBtns}>
           <button
             type="submit"
-            className={`btn ${
-              props.isLoadingPost ? "btn-submit-disabled" : "btn-submit"
-            } mr-3`}
+            className={
+              isEdit === false
+                ? `btn ${
+                    props.isLoadingPost ? "btn-submit-disabled" : "btn-submit"
+                  } mr-3`
+                : `btn ${
+                    props.flag ? "btn-submit-disabled" : "btn-submit"
+                  } mr-3`
+            }
           >
-            {props.isLoadingPost && (
-              <img src={spinner} alt="spinner" className={style.spinner} />
-            )}
+            {isEdit === false
+              ? props.isLoadingPost && (
+                  <img src={spinner} alt="spinner" className={style.spinner} />
+                )
+              : props.flag && (
+                  <img src={spinner} alt="spinner" className={style.spinner} />
+                )}
+
             {isEdit === false ? "Add Poll" : "Edit Poll"}
           </button>
           <button
@@ -256,7 +255,7 @@ const PollForm = props => {
             }`}
             disabled={props.polls.length >= 1 ? false : true}
             onClick={
-              isEdit === false ? toggleModal : () => props.toggleEdit(poll.id)
+              isEdit === false ? toggleModal : () => props.toggleEdit(poll)
             }
           >
             {props.isLoadingClear && (
@@ -273,7 +272,7 @@ const PollForm = props => {
           text={"Are you sure you want to clear all the polls?"}
         />
       )}
-      {error && <p className="error error-red">{error}</p>}
+      {props.errors && <p className="error error-red">{props.errors.error}</p>}
     </>
   );
 };
